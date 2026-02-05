@@ -1,0 +1,17 @@
+basePath: /api
+info:
+  contact: {}
+  description: Authentication & wallet service
+  title: Village Api
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  CookieAuth:
+    in: cookie
+    name: auth
+    type: apiKey
+swagger: "2.0"
