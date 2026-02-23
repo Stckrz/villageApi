@@ -8,6 +8,8 @@ import (
 
 	application "github.com/Stckrz/villageApi/internal/app"
 	"github.com/joho/godotenv"
+    _ "github.com/Stckrz/villageApi/docs"
+
 )
 
 // @title Village Api

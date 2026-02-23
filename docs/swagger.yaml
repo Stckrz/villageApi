@@ -1,17 +1,306 @@
 basePath: /api
+definitions:
+  httpx.CreateBuildingRequest:
+    properties:
+      categories:
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      imagePath:
+        type: string
+      name:
+        type: string
+      thumbnailPath:
+        type: string
+    type: object
+  httpx.CreateTaskRequest:
+    properties:
+      building_id:
+        type: integer
+      description:
+        type: string
+      is_completed:
+        type: boolean
+      name:
+        type: string
+    type: object
+  httpx.UpdateBuildingRequest:
+    properties:
+      categories:
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      imagePath:
+        type: string
+      name:
+        type: string
+      thumbnailPath:
+        type: string
+    type: object
+  httpx.UpdateTaskRequest:
+    properties:
+      building_id:
+        type: integer
+      description:
+        type: string
+      is_completed:
+        type: boolean
+      name:
+        type: string
+    type: object
+  models.Building:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/models.BuildingCategory'
+        type: array
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      imagePath:
+        type: string
+      name:
+        type: string
+      tasks:
+        items:
+          $ref: '#/definitions/models.Task'
+        type: array
+      thumbnailPath:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.BuildingCategory:
+    properties:
+      buildingID:
+        type: integer
+      createdAt:
+        type: string
+      id:
+        type: integer
+      text:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.Task:
+    properties:
+      building:
+        $ref: '#/definitions/models.Building'
+      buildingId:
+        type: integer
+      completedAt:
+        type: string
+      createdAt:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      isCompleted:
+        type: boolean
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
 info:
   contact: {}
-  description: Authentication & wallet service
+  description: Service for managing Village UI Application
   title: Village Api
   version: "1.0"
-paths: {}
-securityDefinitions:
-  BearerAuth:
-    in: header
-    name: Authorization
-    type: apiKey
-  CookieAuth:
-    in: cookie
-    name: auth
-    type: apiKey
+paths:
+  /buildings:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Building'
+            type: array
+      summary: Get buildings
+      tags:
+      - buildings
+    post:
+      parameters:
+      - description: Create building payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/httpx.CreateBuildingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Service Error
+          schema:
+            type: string
+      summary: Create new building
+      tags:
+      - buildings
+  /buildings/{id}:
+    delete:
+      parameters:
+      - description: Building ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Service Error
+          schema:
+            type: string
+      summary: Delete a building
+      tags:
+      - buildings
+    get:
+      parameters:
+      - description: Building ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: Building
+      summary: Get building by id
+      tags:
+      - buildings
+    put:
+      parameters:
+      - description: Building ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update building payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/httpx.UpdateBuildingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Service Error
+          schema:
+            type: string
+      summary: Update a building
+      tags:
+      - buildings
+  /tasks:
+    post:
+      parameters:
+      - description: Create task payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/httpx.CreateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Service Error
+          schema:
+            type: string
+      summary: Create new task
+      tags:
+      - tasks
+  /tasks/{id}:
+    delete:
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Service Error
+          schema:
+            type: string
+      summary: Delete a task
+      tags:
+      - tasks
+    put:
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update task payload
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/httpx.UpdateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Service Error
+          schema:
+            type: string
+      summary: Update a task
+      tags:
+      - tasks
 swagger: "2.0"
