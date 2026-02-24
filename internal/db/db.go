@@ -14,7 +14,8 @@ func ConnectDb() (*gorm.DB, error) {
 	//try to get dbPath from env, otherwise next to main.go
 	dbPath := os.Getenv("DB_PATH")
 	if dbPath == "" {
-		dbPath = "/data/app.db"
+		// dbPath = "/data/app.db"
+		dbPath = "data/app.db"
 	}
 
 	dsn := fmt.Sprintf(

@@ -43,16 +43,16 @@ type UpdateTaskRequest struct {
 // @Produce json
 // @Success 200 {array} models.Task
 // @Router /tasks [get]
-// func (h *TaskHandler) ListTasks(w http.ResponseWriter, r *http.Request) {
-// 	users, err := h.service.ListTasks()
-// 	if err != nil {
-// 		http.Error(w, "failed to fetch users", http.StatusInternalServerError)
-// 		return
-// 	}
-//
-// 	w.Header().Set("Content-Type", "application/json")
-// 	json.NewEncoder(w).Encode(users)
-// }
+func (h *TaskHandler) ListTasks(w http.ResponseWriter, r *http.Request) {
+	users, err := h.service.ListTasks()
+	if err != nil {
+		http.Error(w, "failed to fetch users", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(users)
+}
 
 // @CreateTask godoc
 // @Summary Create new task

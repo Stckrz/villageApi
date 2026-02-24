@@ -24,7 +24,7 @@ func BuildRouter(deps RouterDeps) *chi.Mux {
 			"http://localhost:5173",
 			"http://localhost:8080",
 		},
-		AllowedMethods:   []string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"},
+		AllowedMethods:   []string{"GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Content-Type", "Authorization"},
 		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: true,
@@ -56,6 +56,7 @@ func BuildRouter(deps RouterDeps) *chi.Mux {
 	r.Put("/api/buildings/{id}", buildings.UpdateBuilding)
 
 	//Task Endpoints
+	r.Get("/api/tasks", tasks.ListTasks)
 	r.Post("/api/tasks", tasks.CreateTask)
 	r.Delete("/api/tasks/{id}", tasks.DeleteTask)
 	r.Put("/api/tasks/{id}", tasks.UpdateTask)

@@ -6,7 +6,7 @@ import (
 )
 
 type TaskService interface {
-	// ListTasks() ([]models.Task, error)
+	ListTasks() ([]models.Task, error)
 	// ListTasksByBuildingId(buildingId uint) ([]models.Task, error)
 	CreateTask(task models.Task) (models.Task, error)
 	DeleteTask(id uint) error
@@ -21,14 +21,14 @@ func NewTaskService(db *gorm.DB) TaskService {
 	return &taskService{db: db}
 }
 
-// func (s *taskService) ListTasks() ([]models.Task, error) {
-// 	var tasks []models.Task
-// 	if err := s.db.Preload("Categories").Find(&tasks).Error; err != nil {
-// 		return nil, err
-// 	}
-//
-// 	return tasks, nil
-// }
+func (s *taskService) ListTasks() ([]models.Task, error) {
+	var tasks []models.Task
+	if err := s.db.Find(&tasks).Error; err != nil {
+		return nil, err
+	}
+
+	return tasks, nil
+}
 
 // func (s *taskService) ListTasksByBuildingId(buildingId uint) ([]models.Task, error) {
 // 	var tasks []models.Task

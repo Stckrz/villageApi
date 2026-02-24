@@ -24,7 +24,7 @@ func NewBuildingService(db *gorm.DB) BuildingService {
 
 func (s *buildingService) ListBuildings() ([]models.Building, error) {
 	var buildings []models.Building
-	if err := s.db.Preload("Categories").Preload("Tasks").Find(&buildings).Error; err != nil {
+	if err := s.db.Preload("Categories").Preload("Tasks").Preload("Tasks.Building").Find(&buildings).Error; err != nil {
 		return nil, err
 	}
 
